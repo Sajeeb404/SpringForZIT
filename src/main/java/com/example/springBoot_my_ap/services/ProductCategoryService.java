@@ -30,7 +30,8 @@ public class ProductCategoryService {
                 maxSequenceNumber = 1.0;
             }
 
-            productCategoryModel.setSeuquence_number(maxSequenceNumber + 0.1);
+            Double newNumber = maxSequenceNumber + 1.0;
+            productCategoryModel.setSeuquence_number(newNumber);
             productCategoryModel.setStatus(CategoryStatus.Active);
             repository.save(productCategoryModel);
         }
@@ -60,6 +61,9 @@ public class ProductCategoryService {
         repository.deleteById(id);
     }
 //this method for delete by id end
+
+
+
 
 
 
