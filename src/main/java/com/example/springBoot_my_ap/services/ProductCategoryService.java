@@ -21,17 +21,11 @@ public class ProductCategoryService {
             repository.findById(productCategoryModel.getId()).map(old ->{
                 old.setEnglish_name(productCategoryModel.getEnglish_name());
                 old.setBangla_name(productCategoryModel.getBangla_name());
+                old.setSeuquence_number(productCategoryModel.getSeuquence_number());
                 old.setStatus(productCategoryModel.getStatus());
                 return repository.save(old);
             });
         }else {
-            Double maxSequenceNumber = repository.findMaxSequenceNumber();
-            if (maxSequenceNumber == null) {
-                maxSequenceNumber = 1.0;
-            }
-
-            Double newNumber = maxSequenceNumber + 1.0;
-            productCategoryModel.setSeuquence_number(newNumber);
             productCategoryModel.setStatus(CategoryStatus.Active);
             repository.save(productCategoryModel);
         }

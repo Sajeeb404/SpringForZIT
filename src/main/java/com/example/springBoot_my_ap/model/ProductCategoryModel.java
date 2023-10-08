@@ -19,9 +19,7 @@ public class ProductCategoryModel {
 
     private String english_name;
     private String bangla_name;
-
-    @Column(name = "sequence_number", nullable = false)
-    private Double seuquence_number;
+    private String seuquence_number;
 
     @Enumerated(EnumType.STRING)
     private CategoryStatus status;
