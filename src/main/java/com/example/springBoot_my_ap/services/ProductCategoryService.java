@@ -1,11 +1,12 @@
 package com.example.springBoot_my_ap.services;
 import com.example.springBoot_my_ap.enums.CategoryStatus;
+import com.example.springBoot_my_ap.exception.DataNotFoundException;
 import com.example.springBoot_my_ap.model.ProductCategoryModel;
 import com.example.springBoot_my_ap.repository.ProductCategoryRpository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 import java.util.Optional;
 
 @Service
@@ -43,8 +44,10 @@ public class ProductCategoryService {
 
 
 //this method for single category list start
-    public Optional<ProductCategoryModel> getById(Long id){
-        return repository.findById(id);
+    public ProductCategoryModel getById(Long id){
+//        return repository.findById(id);
+
+        return repository.findById(id).orElseThrow(() -> new DataNotFoundException("Category not found for id: " + id));
     }
 //this method for single category list end
 

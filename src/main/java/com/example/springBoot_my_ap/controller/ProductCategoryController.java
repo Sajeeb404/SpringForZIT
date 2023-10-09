@@ -1,19 +1,18 @@
 package com.example.springBoot_my_ap.controller;
 
 
+import com.example.springBoot_my_ap.exception.ErrorResponse;
 import com.example.springBoot_my_ap.model.ProductCategoryModel;
-import com.example.springBoot_my_ap.repository.ProductCategoryRpository;
+
 import com.example.springBoot_my_ap.services.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -61,15 +60,51 @@ public class ProductCategoryController {
 
 //this get api by id start
     @GetMapping("/getCategoryById/{id}")
-    public ResponseEntity<ProductCategoryModel> getCategoryById(@PathVariable Long id) {
-        Optional<ProductCategoryModel> cateList = service.getById(id);
-        if (cateList.isPresent()) {
-            return new ResponseEntity<>(cateList.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ErrorResponse<ProductCategoryModel> getCategoryById(@PathVariable Long id) {
+
+
+//        ProductCategoryModel cateList = service.getById(id).get();
+//        ProductCategoryModel cateList = service.getById(id).orElseThrow(() -> new DataNotFoundException("Category not found for id: " + id));
+
+//        if (cateList != null) {
+//            return new ResponseEntity<>(cateList, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+        ProductCategoryModel p = service.getById(id);
+        return  new ErrorResponse<>(List.of,200,"success", "Product Catagory Found");
+//        try {
+
+
+            // Create a JSON string representing the success response
+//            String successResponse = "{"
+//                    + "\"status_code\": 1000,"
+//                    + "\"status\": \"Success\","
+//                    + "\"reason\": \"OK\","
+//                    + "\"data\": {"
+//                    + "\"id\": " + cateList.getId() + ","
+//                    + "\"English Name\": \"" + cateList.getEnglish_name() + "\","
+//                    + "\"Bangla Name\": \"" + cateList.getBangla_name() + "\""
+//                    + "\"Sequence Number\": \"" + cateList.getSeuquence_number() + "\""
+//                    + "\"Stats\": \"" + cateList.getStatus() + "\""
+//                    // Add other fields to the data as needed
+//                    + "}"
+//                    + "}";
+
+//return cateList;
+
+//            return ResponseEntity.ok(successResponse);
+//
+//        } catch (DataNotFoundException e) {
+//
+//            throw new DataNotFoundException(e.getMessage());
+
     }
+
+
+
 //this get api by id end
+
 
 
 
