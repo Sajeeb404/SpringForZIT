@@ -27,7 +27,7 @@ public class ProductCategoryService {
             });
         }else {
             productCategoryModel.setStatus(CategoryStatus.Active);
-            repository.save(productCategoryModel);
+           repository.save(productCategoryModel);
         }
     }
 //this method for update and save end
