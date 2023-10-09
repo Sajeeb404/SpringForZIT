@@ -6,19 +6,22 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 
 public class ErrorResponse <T>{
 
-    private List<T> data;
+
     private int status_code;
     private String status;
     private String reason;
-public ErrorResponse(){}
+    private List<T> data;
+
 
 }
 

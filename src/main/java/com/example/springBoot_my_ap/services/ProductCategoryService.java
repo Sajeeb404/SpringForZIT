@@ -4,6 +4,8 @@ import com.example.springBoot_my_ap.exception.DataNotFoundException;
 import com.example.springBoot_my_ap.model.ProductCategoryModel;
 import com.example.springBoot_my_ap.repository.ProductCategoryRpository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -44,10 +46,27 @@ public class ProductCategoryService {
 
 
 //this method for single category list start
-    public ProductCategoryModel getById(Long id){
-//        return repository.findById(id);
+    public ResponseEntity<Map<String, Object>> getById(String id){
 
-        return repository.findById(id).orElseThrow(() -> new DataNotFoundException("Category not found for id: " + id));
+        Long categoryId = Long.parseLong(id);
+       ProductCategoryModel model = repository.findById(categoryId).orElseThrow(()-> new DataNotFoundException("Category not found "+ id));
+
+        Map<String, Object> response = new TreeMap<>();
+        if (model.getId() != null) {
+            response.put("data", model);
+            response.put("status_code", 200);
+            response.put("status", "Success");
+            response.put("reason", "Category found " + id);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("status_code", 404);
+            response.put("status", "Failed");
+            response.put("reason", "Category not found " + id);
+            response.put("data", new ArrayList<>());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 //this method for single category list end
 

@@ -1,6 +1,7 @@
 package com.example.springBoot_my_ap.model;
 
 import com.example.springBoot_my_ap.enums.CategoryStatus;
+import com.example.springBoot_my_ap.exception.ErrorResponse;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

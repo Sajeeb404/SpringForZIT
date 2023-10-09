@@ -1,11 +1,13 @@
 package com.example.springBoot_my_ap.controller;
 
 
+import com.example.springBoot_my_ap.exception.DataNotFoundException;
 import com.example.springBoot_my_ap.exception.ErrorResponse;
 import com.example.springBoot_my_ap.model.ProductCategoryModel;
 
 import com.example.springBoot_my_ap.services.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -27,10 +29,14 @@ public class ProductCategoryController {
 
 //this is post api start
      @PostMapping("/postCategory")
-    public ResponseEntity<ProductCategoryModel> postCategory(@Valid @RequestBody ProductCategoryModel productCategoryModel) {
+    public ResponseEntity<Map<String, Object>> postCategory(@Valid @RequestBody ProductCategoryModel productCategoryModel, ErrorResponse err) {
+         Map<String, Object> response = new HashMap<>();
+         response.put("message", err);
+         response.put("data", productCategoryModel);
         try {
-            service.save(productCategoryModel);
-            return new ResponseEntity<>(productCategoryModel, HttpStatus.CREATED);
+            return ResponseEntity.ok(response);
+//            service.save(productCategoryModel);
+//            return new ResponseEntity<>(productCategoryModel, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -60,47 +66,10 @@ public class ProductCategoryController {
 
 //this get api by id start
     @GetMapping("/getCategoryById/{id}")
-    public ErrorResponse<ProductCategoryModel> getCategoryById(@PathVariable Long id) {
-
-
-//        ProductCategoryModel cateList = service.getById(id).get();
-//        ProductCategoryModel cateList = service.getById(id).orElseThrow(() -> new DataNotFoundException("Category not found for id: " + id));
-
-//        if (cateList != null) {
-//            return new ResponseEntity<>(cateList, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-        ProductCategoryModel p = service.getById(id);
-        return  new ErrorResponse<>(List.of,200,"success", "Product Catagory Found");
-//        try {
-
-
-            // Create a JSON string representing the success response
-//            String successResponse = "{"
-//                    + "\"status_code\": 1000,"
-//                    + "\"status\": \"Success\","
-//                    + "\"reason\": \"OK\","
-//                    + "\"data\": {"
-//                    + "\"id\": " + cateList.getId() + ","
-//                    + "\"English Name\": \"" + cateList.getEnglish_name() + "\","
-//                    + "\"Bangla Name\": \"" + cateList.getBangla_name() + "\""
-//                    + "\"Sequence Number\": \"" + cateList.getSeuquence_number() + "\""
-//                    + "\"Stats\": \"" + cateList.getStatus() + "\""
-//                    // Add other fields to the data as needed
-//                    + "}"
-//                    + "}";
-
-//return cateList;
-
-//            return ResponseEntity.ok(successResponse);
-//
-//        } catch (DataNotFoundException e) {
-//
-//            throw new DataNotFoundException(e.getMessage());
-
+    public ResponseEntity<Map<String, Object>> getCategoryById(@PathVariable Long id) {
+        String categoryId = id.toString();
+        return  service.getById(categoryId);
     }
-
 
 
 //this get api by id end
