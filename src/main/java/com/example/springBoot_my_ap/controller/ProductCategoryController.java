@@ -8,6 +8,7 @@ import com.example.springBoot_my_ap.model.ProductCategoryModel;
 import com.example.springBoot_my_ap.services.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -110,6 +111,10 @@ public class ProductCategoryController {
         }
     }
 //this is delete api by id end
+
+
+
+
 
 
 
