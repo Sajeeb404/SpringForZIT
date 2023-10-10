@@ -1,12 +1,10 @@
 package com.example.springBoot_my_ap.exception;
 
 
-import com.example.springBoot_my_ap.model.ProductCategoryModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 @Getter
@@ -14,8 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ErrorResponse <T>{
-
+public class ResponseMassage<T>{
 
     private int status_code;
     private String status;
@@ -23,5 +20,7 @@ public class ErrorResponse <T>{
     private List<T> data;
 
 
+    public void setErrors(List<String> errors) {
+    }
 }
 

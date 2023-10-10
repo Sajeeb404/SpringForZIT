@@ -4,6 +4,7 @@ import com.example.springBoot_my_ap.exception.DataNotFoundException;
 import com.example.springBoot_my_ap.model.ProductCategoryModel;
 import com.example.springBoot_my_ap.repository.ProductCategoryRpository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class ProductCategoryService {
 
 
 //this method for update and save start
-    public void save(ProductCategoryModel productCategoryModel){
+    public ProductCategoryModel save(ProductCategoryModel productCategoryModel){
         if(productCategoryModel.getId()!=null){
             repository.findById(productCategoryModel.getId()).map(old ->{
                 old.setEnglish_name(productCategoryModel.getEnglish_name());
@@ -30,8 +31,8 @@ public class ProductCategoryService {
             });
         }else {
             productCategoryModel.setStatus(CategoryStatus.Active);
-           repository.save(productCategoryModel);
         }
+          return repository.save(productCategoryModel);
     }
 //this method for update and save end
 
@@ -73,8 +74,15 @@ public class ProductCategoryService {
 
 
 //this method for delete by id start
-    public void deleteCategory(Long id){
-        repository.deleteById(id);
+    public boolean deleteCategory(Long id){
+        try {
+            repository.deleteById(id);
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 //this method for delete by id end
 
